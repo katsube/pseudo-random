@@ -15,7 +15,7 @@ $ npm install pseudo-random.js
 ```javascript
 const pseudoRandom = require('pseudo-random.js');
 const seed   = 123;
-const random = new pseudoRandom(seed);  // If not specified, the current time will be used.
+const random = new pseudoRandom(seed);
 
 //-------------------------------
 // Generate
@@ -27,7 +27,12 @@ random.next(1, 10);  // 2  (1 <= x <= 10)
 // shuffle array
 //-------------------------------
 const array = [1, 2, 3, 4, 5];
-random.shuffleArray(array);   // [3, 5, 1, 4, 2]
+
+// Shuffle
+const r1 = random.shuffleArray(array);   // [3, 5, 1, 4, 2]
+
+// Restore (v1.1.0 later)
+const r2 = random.restoreArray(r1);   // [1, 2, 3, 4, 5]
 ```
 
 ## License

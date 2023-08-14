@@ -19,6 +19,7 @@
  *   //-------------------------------
  *   const array = [1, 2, 3, 4, 5];
  *   random.shuffleArray(array);   // [3, 5, 1, 4, 2]
+ *   random.restoreArray(array);   // [1, 2, 3, 4, 5]
  */
 class pseudoRandom {
   #seed;
@@ -78,14 +79,30 @@ class pseudoRandom {
     }
 
     const array2 = array.slice();    // copy
-    const length = array2.length - 1;
-    for (let i = length; i > 0; i--) {
-      const r = this.next(0, i);
-      const tmp = array2[i];
-      array2[i] = array2[r];
-      array2[r] = tmp;
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(this.next() * (i + 1));
+      [array2[i], array2[j]] = [array2[j], array2[i]];
     }
     return array2;
+  }
+
+  /**
+   * restore array
+   *
+   * @param {array} array
+   * @returns {array}
+   */
+  restoreArray(array) {
+    if ( ! Array.isArray(array) ){
+      throw new Error('not array');
+    }
+
+    const orgArray = [...array];
+    for (let i = orgArray.length - 1; i > 0; i--) {
+      const j = Math.floor(this.next() * (i + 1));
+      [orgArray[i], orgArray[j]] = [orgArray[j], orgArray[i]];
+    }
+    return orgArray;
   }
 
   /**
