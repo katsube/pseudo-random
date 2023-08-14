@@ -1,0 +1,23 @@
+{
+  "name": "pseudo-random",
+  "version": "1.0.0",
+  "description": "Library for generating pseudo-random numbers.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx jest test/"
+  },
+  "keywords": [
+    "pseudo-random",
+    "random",
+    "number",
+    "pseudo",
+    "shuffle",
+    "乱数",
+    "疑似乱数"
+  ],
+  "author": "M.Katsube",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^29.6.2"
+  }
+}
