@@ -1,4 +1,4 @@
-# pseudo-random
+# pseudo-random.js
 Library for generating pseudo-random numbers.
 
 ## INDEX
@@ -8,12 +8,12 @@ Library for generating pseudo-random numbers.
 
 ## Installation
 ```
-$ npm install pseudo-random
+$ npm install pseudo-random.js
 ```
 
 ## Usage
 ```javascript
-const pseudoRandom = require('pseudo-random');
+const pseudoRandom = require('pseudo-random.js');
 const seed   = 123;
 const random = new pseudoRandom(seed);  // If not specified, the current time will be used.
 
