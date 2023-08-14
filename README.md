@@ -21,7 +21,7 @@ const random = new pseudoRandom(seed);  // If not specified, the current time wi
 // Generate
 //-------------------------------
 random.next();       // 0.05236359
-random.next(1, 10);  // 52  (1 <= x <= 10)
+random.next(1, 10);  // 2  (1 <= x <= 10)
 
 //-------------------------------
 // shuffle array
