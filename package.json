@@ -6,6 +6,10 @@
   "scripts": {
     "test": "npx jest test/"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/katsube/pseudo-random.git"
+  },
   "keywords": [
     "pseudo-random",
     "random",
@@ -17,6 +21,10 @@
   ],
   "author": "M.Katsube",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/katsube/pseudo-random/issues"
+  },
+  "homepage": "https://github.com/katsube/pseudo-random#readme",
   "devDependencies": {
     "jest": "^29.6.2"
   }
