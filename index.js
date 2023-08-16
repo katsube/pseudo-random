@@ -88,6 +88,7 @@ class pseudoRandom {
     if ( ! Array.isArray(array) ){
       throw new Error('not array');
     }
+    this.resetSeed();
 
     const array2 = array.slice();    // copy
     for (let i = array.length - 1; i > 0; i--) {
@@ -194,7 +195,6 @@ class pseudoRandom {
    * @private
    */
   #createMap(length){
-    this.resetSeed();
     return this.shuffleArray(Array.from({length}, (_, i) => i));
   }
 
