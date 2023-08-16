@@ -24,12 +24,18 @@ random.next();       // 0.05236359
 random.next(1, 10);  // 2  (1 <= x <= 10)
 
 //-------------------------------
-// shuffle array
+// Shuffle array
 //-------------------------------
-const array = [1, 2, 3, 4, 5];
+const array1 = [1, 2, 3, 4, 5];
+const r1 = random.shuffleArray(array1);   // [3, 5, 1, 4, 2]
 
-// Shuffle
-const r1 = random.shuffleArray(array);   // [3, 5, 1, 4, 2]
+//-------------------------------
+// Reversible shuffling of array
+// (v1.3.0 later)
+//-------------------------------
+const array2 = [1, 2, 3, 4, 5];
+const result1 = random.seedSortArray(array2);     // [2, 3, 4, 5, 1]
+const result2 = random.seedUnSortArray(result1);  // [1, 2, 3, 4, 5]
 ```
 
 ## License

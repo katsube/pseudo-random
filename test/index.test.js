@@ -48,16 +48,23 @@ test('random.shuffleArray(array)', () => {
   expect(() => { random.shuffleArray(1); }).toThrow();
 });
 
-/*
-test('random.restoreArray(array)', () => {
+test('random.seedSortArray(array)', () => {
   const random = new pseudoRandom(SEED);
   const array = [1, 2, 3, 4, 5];
-  const r1 = random.shuffleArray(array);
-  const r2 = random.restoreArray(r1);
+  const r = random.seedSortArray(array);
+  expect(r).not.toEqual(array);   // array is shuffled
 
-  expect(r2).toEqual(array);   // array is restored
-
-  expect(() => { random.restoreArray(); }).toThrow();
-  expect(() => { random.restoreArray(1); }).toThrow();
+  expect(() => { random.seedSortArray(); }).toThrow();
+  expect(() => { random.seedSortArray(1); }).toThrow();
 });
-*/
+
+test('random.seedUnSortArray(array)', () => {
+  const random = new pseudoRandom(SEED);
+  const array = [1, 2, 3, 4, 5];
+  const shuffledArray = random.seedSortArray(array);
+  const r = random.seedUnSortArray(shuffledArray);
+  expect(r).toEqual(array);   // array is unshuffled
+
+  expect(() => { random.seedUnSortArray(); }).toThrow();
+  expect(() => { random.seedUnSortArray(1); }).toThrow();
+});
