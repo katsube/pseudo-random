@@ -48,19 +48,31 @@ const result2 = random.seedUnSortArray(result1);  // [1, 2, 3, 4, 5]
 
 ## API
 ### random.seed
-change the seed value.
+change the seed value. If referenced, you can get the current value.
 ```javascript
+const seed = random.seed;  // current value
 random.seed = 128;
 ```
-If referenced, you can get the current value
+
 
 ### random.digits
-a random number of digits, an integer from 1 to 8. default is 8.
+a random number of digits, an integer from 1 to 8. default is 8. If referenced, you can get the current value.
 ```javascript
+const digits = random.digits; // current value
 random.digits = 6;
 ```
-If referenced, you can get the current value
 
+### constructor()
+seed value can be specified at instance creation.
+```javascript
+const random = new pseudoRandom(123);
+```
+
+If no seed value is specified, the current time is used.
+```javascript
+const random = new pseudoRandom();
+console.log(random.seed);  // UNIX TIME（1692199462509）
+```
 
 ### next()
 Generates a pseudo-random number from the current seed value. Returns a value with 8 decimal places. **seed changes when executed.**
