@@ -7,6 +7,7 @@ Library for generating pseudo-random numbers.
 1. [API](#api)
     1. [random.seed](#randomseed)
     1. [random.digits](#randomdigits)
+    1. [constructor()](#constructor)
     1. [next()](#next)
     1. [shuffleArray()](#shufflearray)
     1. [seedSortArray()](#seedsortarray)
