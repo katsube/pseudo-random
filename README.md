@@ -2,9 +2,9 @@
 Library for generating pseudo-random numbers.
 
 ## INDEX
-1. Installation
-1. Usage
-1. License
+1. [Installation](#installation)
+1. [Usage](#usage)
+1. [License](#license)
 
 ## Installation
 ```
@@ -30,9 +30,6 @@ const array = [1, 2, 3, 4, 5];
 
 // Shuffle
 const r1 = random.shuffleArray(array);   // [3, 5, 1, 4, 2]
-
-// Restore (v1.1.0 later)
-const r2 = random.restoreArray(r1);   // [1, 2, 3, 4, 5]
 ```
 
 ## License

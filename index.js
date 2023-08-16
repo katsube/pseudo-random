@@ -55,9 +55,9 @@ class pseudoRandom {
     const digits = Math.pow(10, this.#digits);
     let seed = this.#seed;
 
-    seed = seed ^ (seed << 13);
-    seed = seed ^ (seed >>> 17);
-    seed = seed ^ (seed << 5);
+    seed ^= seed << 13;
+    seed ^= seed >> 17;
+    seed ^= seed << 5;
     this.#seed = seed;
     const rand = Math.abs(seed % digits) / digits;
 
@@ -87,22 +87,13 @@ class pseudoRandom {
   }
 
   /**
-   * restore array
+   * TODO: restore array
    *
    * @param {array} array
    * @returns {array}
    */
   restoreArray(array) {
-    if ( ! Array.isArray(array) ){
-      throw new Error('not array');
-    }
-
-    const orgArray = [...array];
-    for (let i = orgArray.length - 1; i > 0; i--) {
-      const j = Math.floor(this.next() * (i + 1));
-      [orgArray[i], orgArray[j]] = [orgArray[j], orgArray[i]];
-    }
-    return orgArray;
+    throw new Error('not implemented');
   }
 
   /**
