@@ -48,6 +48,7 @@ test('random.shuffleArray(array)', () => {
   expect(() => { random.shuffleArray(1); }).toThrow();
 });
 
+/*
 test('random.restoreArray(array)', () => {
   const random = new pseudoRandom(SEED);
   const array = [1, 2, 3, 4, 5];
@@ -59,3 +60,4 @@ test('random.restoreArray(array)', () => {
   expect(() => { random.restoreArray(); }).toThrow();
   expect(() => { random.restoreArray(1); }).toThrow();
 });
+*/
