@@ -28,6 +28,7 @@
  *  const unShuffledArray = random.seedUnSortArray(shuffledArray);   // [1, 2, 3, 4, 5]
  */
 class pseudoRandom {
+  #seedOrigin;
   #seed;
   #digits = 8;
 
@@ -42,6 +43,7 @@ class pseudoRandom {
       throw new Error('seed must be integer');
 
     this.#seed = (seed === null)?  new Date().getTime() : seed;
+    this.#seedOrigin = seed;
   }
 
   /**
@@ -61,9 +63,9 @@ class pseudoRandom {
     const digits = Math.pow(10, this.#digits);
     let seed = this.#seed;
 
-    seed = seed << 13;
-    seed = seed >> 17;
-    seed = seed << 5;
+    seed = seed ^ (seed << 13);
+    seed = seed ^ (seed >>> 17);
+    seed = seed ^ (seed << 5);
     this.#seed = seed;
 
     const rand = Math.abs(seed % digits) / digits;
@@ -128,6 +130,15 @@ class pseudoRandom {
   }
 
   /**
+   * reset seed
+   *
+   * @returns {void}
+   */
+  resetSeed() {
+    this.#seed = this.#seedOrigin;
+  }
+
+  /**
    * set digits
    *
    * @param {number} digits
@@ -155,6 +166,27 @@ class pseudoRandom {
   }
 
   /**
+   * set seed
+   *
+   */
+  set seed(seed) {
+    // is integer ?
+    if ( ! Number.isInteger(seed) ){
+      throw new Error('seed must be integer');
+    }
+    this.#seed = seed;
+  }
+
+  /**
+   * get seed
+   *
+   * @returns {number}
+   */
+  get seed() {
+    return this.#seed;
+  }
+
+  /**
    * create map array
    *
    * @param {number} length
@@ -162,6 +194,7 @@ class pseudoRandom {
    * @private
    */
   #createMap(length){
+    this.resetSeed();
     return this.shuffleArray(Array.from({length}, (_, i) => i));
   }
 

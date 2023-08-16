@@ -1,5 +1,7 @@
 const pseudoRandom = require('../index.js');
+
 const SEED = 123;
+const random = new pseudoRandom(SEED);
 
 test('constructor', () => {
   const r = new pseudoRandom();
@@ -10,14 +12,12 @@ test('constructor', () => {
 });
 
 test('random.next()', () => {
-  const random = new pseudoRandom(SEED);
   const r = random.next();
   expect(r).toBeGreaterThanOrEqual(0);  // 0 <= x
   expect(r).toBeLessThanOrEqual(1);     // x <= 1
 });
 
 test('random.next(1, 10)', () => {
-  const random = new pseudoRandom(SEED);
   const r = random.next(1, 10);
   expect(r).toBeGreaterThanOrEqual(1);  // 1 <= x
   expect(r).toBeLessThanOrEqual(10);    // x <= 10
@@ -28,7 +28,6 @@ test('random.next(1, 10)', () => {
 });
 
 test('random.digit', () => {
-  const random = new pseudoRandom(SEED);
   random.digits = 6;
   expect(random.digits).toBe(6);
   expect(random.next().toString().length).toBe(8); // 0.123456
@@ -36,10 +35,11 @@ test('random.digit', () => {
   expect(() => { random.digits = 0; }).toThrow();
   expect(() => { random.digits = 10; }).toThrow();
   expect(() => { random.digits = 'a'; }).toThrow();
+
+  random.digits = 8;  // restore
 });
 
 test('random.shuffleArray(array)', () => {
-  const random = new pseudoRandom(SEED);
   const array = [1, 2, 3, 4, 5];
   const r = random.shuffleArray(array);
   expect(r).not.toEqual(array);   // array is shuffled
@@ -49,7 +49,6 @@ test('random.shuffleArray(array)', () => {
 });
 
 test('random.seedSortArray(array)', () => {
-  const random = new pseudoRandom(SEED);
   const array = [1, 2, 3, 4, 5];
   const r = random.seedSortArray(array);
   expect(r).not.toEqual(array);   // array is shuffled
@@ -59,7 +58,6 @@ test('random.seedSortArray(array)', () => {
 });
 
 test('random.seedUnSortArray(array)', () => {
-  const random = new pseudoRandom(SEED);
   const array = [1, 2, 3, 4, 5];
   const shuffledArray = random.seedSortArray(array);
   const r = random.seedUnSortArray(shuffledArray);
@@ -67,4 +65,23 @@ test('random.seedUnSortArray(array)', () => {
 
   expect(() => { random.seedUnSortArray(); }).toThrow();
   expect(() => { random.seedUnSortArray(1); }).toThrow();
+});
+
+test('random.resetSeed() / random.seed', () => {
+  random.next();
+  random.next();
+  random.next();
+  random.resetSeed();
+  expect(random.seed).toBe(SEED);
+});
+
+test('random.seed = x', () => {
+  random.seed = 999;
+  expect(random.seed).toBe(999);
+
+  expect(() => { random.seed = 1.1; }).toThrow();
+  expect(() => { random.seed = 'a'; }).toThrow();
+
+  // restore
+  random.resetSeed();
 });
