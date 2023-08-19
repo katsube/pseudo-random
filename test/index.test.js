@@ -7,8 +7,10 @@ test('constructor', () => {
   const r = new pseudoRandom();
   expect(r).toBeInstanceOf(pseudoRandom);
 
+  expect(() => { new pseudoRandom(-1); }).toThrow();
   expect(() => { new pseudoRandom(1.1); }).toThrow();
   expect(() => { new pseudoRandom('a'); }).toThrow();
+  expect(() => { new pseudoRandom(4294967295+100); }).toThrow();
 });
 
 test('random.next()', () => {

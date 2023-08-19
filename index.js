@@ -38,11 +38,7 @@ class pseudoRandom {
    * @param {number} [seed]
    */
   constructor(seed=null) {
-    // seed is integer ?
-    if ( (seed !== null) && ( ! Number.isInteger(seed) ) )
-      throw new Error('seed must be integer');
-
-    this.#seed = (seed === null)?  new Date().getTime() : seed;
+    this.seed = (seed === null)?  this.#timeSeed() : seed;
     this.#seedOrigin = seed;
   }
 
@@ -60,14 +56,13 @@ class pseudoRandom {
     if ( (max !== null) && ( ! Number.isInteger(max) ) )
       throw new Error('max must be integer');
 
-    const digits = Math.pow(10, this.#digits);
-    let seed = this.#seed;
-
+    let seed = this.#uinttoint(this.#seed);
     seed = seed ^ (seed << 13);
     seed = seed ^ (seed >>> 17);
     seed = seed ^ (seed << 5);
-    this.#seed = seed;
+    this.#seed = this.#inttouint(seed);
 
+    const digits = Math.pow(10, this.#digits);
     const rand = Math.abs(seed % digits) / digits;
     if ( (max !== null) && (min !== null) ) {
       return Math.floor(rand * (max - min + 1)) + min;
@@ -170,12 +165,15 @@ class pseudoRandom {
    * set seed
    *
    */
-  set seed(seed) {
-    // is integer ?
-    if ( ! Number.isInteger(seed) ){
+  set seed(num) {
+    if ( ! Number.isInteger(num) ){
       throw new Error('seed must be integer');
     }
-    this.#seed = seed;
+    if ( ! (0 <= num && num <= 0xFFFFFFFF) ){
+      throw new Error('seed must be between 0 and 0xFFFFFFFF(4,294,967,295)');
+    }
+
+    this.#seed = num;
   }
 
   /**
@@ -186,6 +184,36 @@ class pseudoRandom {
   get seed() {
     return this.#seed;
   }
+
+  /**
+   * Create time seed
+   *
+   * @returns {number}
+   * @private
+   */
+  #timeSeed = () =>{
+    const time = new Date().getTime() % Math.pow(10, 9);        // Last 9 digits of UNIX TIME
+    const seed = time.toString().split('').reverse().join('');  // reverse
+    return parseInt(seed);
+  }
+
+  /**
+   * unsigned int to signed int
+   *
+   * @param {number} num
+   * @returns {number}
+   * @private
+   */
+  #uinttoint = (num) => (0x7FFFFFFF<num) ? num-0x100000000 : num;
+
+  /**
+   * signed int to unsigned int
+   *
+   * @param {number} num
+   * @returns {number}
+   * @private
+   */
+  #inttouint = (num) => (num<0) ? num+0x100000000 : num;
 
   /**
    * create map array
