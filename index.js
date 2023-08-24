@@ -12,7 +12,7 @@
  *   // Generate
  *   //-------------------------------
  *   random.next();       // 0.05236359
- *   random.next(1, 10);  // 52  (1 <= x <= 10)
+ *   random.next(1, 10);  // 5  (1 <= x <= 10)
  *
  *   //-------------------------------
  *   // shuffling of array
@@ -28,8 +28,8 @@
  *  const unShuffledArray = random.seedUnSortArray(shuffledArray);   // [1, 2, 3, 4, 5]
  */
 class pseudoRandom {
-  #seedOrigin;
   #seed;
+  #seedOrigin;
   #digits = 8;
 
   /**
@@ -39,7 +39,7 @@ class pseudoRandom {
    */
   constructor(seed=null) {
     this.seed = (seed === null)?  this.#timeSeed() : seed;
-    this.#seedOrigin = seed;
+    this.#seedOrigin = this.seed;
   }
 
   /**
@@ -50,17 +50,16 @@ class pseudoRandom {
    * @returns {number}
    */
   next(min=null, max=null) {
-    // is null or integer ?
     if ( (min !== null) && ( ! Number.isInteger(min) ) )
       throw new Error('min must be integer');
     if ( (max !== null) && ( ! Number.isInteger(max) ) )
       throw new Error('max must be integer');
 
-    let seed = this.#uinttoint(this.#seed);
+    let seed = this.#uint2int(this.#seed);
     seed = seed ^ (seed << 13);
     seed = seed ^ (seed >>> 17);
     seed = seed ^ (seed << 5);
-    this.#seed = this.#inttouint(seed);
+    this.#seed = this.#int2uint(seed);
 
     const digits = Math.pow(10, this.#digits);
     const rand = Math.abs(seed % digits) / digits;
@@ -141,11 +140,9 @@ class pseudoRandom {
    * @returns {void}
    */
   set digits(digits) {
-    // is number ?
     if ( ! Number.isInteger(digits) ){
       throw new Error('digits must be integer');
     }
-    // is between 1 and 8 ?
     if( digits < 1 || digits > 8 ){
       throw new Error('digits must be between 1 and 8');
     }
@@ -204,7 +201,7 @@ class pseudoRandom {
    * @returns {number}
    * @private
    */
-  #uinttoint = (num) => (0x7FFFFFFF<num) ? num-0x100000000 : num;
+  #uint2int = (num) => (0x7FFFFFFF<num) ? num-0x100000000 : num;
 
   /**
    * signed int to unsigned int
@@ -213,7 +210,7 @@ class pseudoRandom {
    * @returns {number}
    * @private
    */
-  #inttouint = (num) => (num<0) ? num+0x100000000 : num;
+  #int2uint = (num) => (num<0) ? num+0x100000000 : num;
 
   /**
    * create map array

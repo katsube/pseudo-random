@@ -72,11 +72,12 @@ const random = new pseudoRandom(123);
 If no seed value is specified, the current time is used.
 ```javascript
 const random = new pseudoRandom();
-console.log(random.seed);  // UNIX TIME(1692199462509)
-                           //  ↓
-                           // Last 9 digits (199462509)
-                           //  ↓
-                           // Reverse (905264991)
+console.log(random.seed);
+  // UNIX TIME(1692199462509)
+  //  ↓
+  // Last 9 digits (199462509)
+  //  ↓
+  // Reverse (905264991)
 ```
 
 ### next()
