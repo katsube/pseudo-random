@@ -10,7 +10,7 @@ test('constructor', () => {
   expect(() => { new pseudoRandom(-1); }).toThrow();
   expect(() => { new pseudoRandom(1.1); }).toThrow();
   expect(() => { new pseudoRandom('a'); }).toThrow();
-  expect(() => { new pseudoRandom(4294967295+100); }).toThrow();
+  expect(() => { new pseudoRandom(4294967295 + 100); }).toThrow();
 });
 
 test('random.next()', () => {
@@ -30,15 +30,16 @@ test('random.next(1, 10)', () => {
 });
 
 test('random.digit', () => {
-  random.digits = 6;
-  expect(random.digits).toBe(6);
-  expect(random.next().toString().length).toBe(8); // 0.123456
+  const digit = 6;
+  random.digits = digit;
+  expect(random.digits).toBe(digit);
+  expect(random.next().toString().length - 2).toBe(digit); // 0.123456
 
   expect(() => { random.digits = 0; }).toThrow();
   expect(() => { random.digits = 10; }).toThrow();
   expect(() => { random.digits = 'a'; }).toThrow();
 
-  random.digits = 8;  // restore
+  random.resetSeed();  // restore
 });
 
 test('random.shuffleArray(array)', () => {
@@ -63,7 +64,7 @@ test('random.seedUnSortArray(array)', () => {
   const array = [1, 2, 3, 4, 5];
   const shuffledArray = random.seedSortArray(array);
   const r = random.seedUnSortArray(shuffledArray);
-  expect(r).toEqual(array);   // array is unshuffled
+  expect(r).toEqual(array);   // array is "un"shuffled
 
   expect(() => { random.seedUnSortArray(); }).toThrow();
   expect(() => { random.seedUnSortArray(1); }).toThrow();
@@ -75,11 +76,16 @@ test('random.resetSeed() / random.seed', () => {
   random.next();
   random.resetSeed();
   expect(random.seed).toBe(SEED);
+
+  random.seed = 999;
+  random.resetSeed();
+  expect(random.seed).toBe(SEED);
 });
 
 test('random.seed = x', () => {
-  random.seed = 999;
-  expect(random.seed).toBe(999);
+  const seed = 999;
+  random.seed = seed;
+  expect(random.seed).toBe(seed);
 
   expect(() => { random.seed = 1.1; }).toThrow();
   expect(() => { random.seed = 'a'; }).toThrow();
